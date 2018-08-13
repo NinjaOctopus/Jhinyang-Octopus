@@ -27,7 +27,7 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.11-rc2'
 
     // Backward compatibility
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
 
     // Design import
     implementation 'com.android.support:design:27.1.1'
@@ -54,6 +54,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.7.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
+
+    // fb login
+    implementation 'com.facebook.android:facebook-login:4.35.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

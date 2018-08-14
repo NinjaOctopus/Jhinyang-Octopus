@@ -15,25 +15,31 @@ import com.facebook.login.widget.LoginButton;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jhinyang.octopus.BaseActivity;
 import jhinyang.octopus.MainActivity;
 import jhinyang.octopus.R;
 
 public class LoginActivity extends BaseActivity{
 
+    @BindView(R.id.login_button) LoginButton loginButton;
+
     private CallbackManager callbackManager;
-    private LoginButton loginButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.login_splash);
+        ButterKnife.bind(LoginActivity.this);
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -53,16 +59,12 @@ public class LoginActivity extends BaseActivity{
                         // App code
                     }
                 });
+    }
 
-
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList
-                        ("public_profile"));
-            }
-        });
+    @OnClick(R.id.login_button)
+    void setLoginButton() {
+        LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList
+                ("public_profile"));
     }
 
     @Override

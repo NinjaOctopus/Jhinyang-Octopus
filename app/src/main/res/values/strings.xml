@@ -6,4 +6,6 @@
 
     <string name="facebook_app_id">1870268266350152</string>
     <string name="fb_login_protocol_scheme">fb1870268266350152</string>
+
+    <string name="guest_login">Guest Peek</string>
 </resources>

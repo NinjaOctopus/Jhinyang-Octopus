@@ -123,6 +123,11 @@ public class LoginActivity extends BaseActivity {
         signIn();
     }
 
+    @OnClick(R.id.btn_guest_login)
+    public void setSignInGuest() {
+        updateUI();
+    }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);

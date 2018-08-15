@@ -12,8 +12,6 @@ package jhinyang.octopus.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
@@ -23,18 +21,15 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 import java.util.Arrays;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
@@ -53,6 +48,11 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initialize();
+    }
+
+    private void initialize() {
         Fabric.with(this, new Answers(), new Crashlytics());
 
         setContentView(R.layout.login_splash);
@@ -61,6 +61,11 @@ public class LoginActivity extends BaseActivity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
+        fbLogin();
+        googleSign();
+    }
+
+    private void fbLogin() {
         callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -82,7 +87,9 @@ public class LoginActivity extends BaseActivity {
                         // App code
                     }
                 });
+    }
 
+    private void googleSign() {
         /**
          * Google Sign in
          */
@@ -95,7 +102,6 @@ public class LoginActivity extends BaseActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
     }
 
     @Override
@@ -107,13 +113,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick(R.id.login_button)
-    public void setLoginButton(View v) {
+    public void setLoginButton() {
         LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList
                 ("public_profile"));
     }
 
     @OnClick(R.id.sign_in_button)
-    public void setSignInButton(View v) {
+    public void setSignInButton() {
         signIn();
     }
 

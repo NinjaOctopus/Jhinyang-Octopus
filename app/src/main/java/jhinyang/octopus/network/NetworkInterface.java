@@ -9,7 +9,19 @@
 
 package jhinyang.octopus.network;
 
-public class NetworkInterface {
+import java.util.List;
 
-   // Get and post requests here for network calls
+import jhinyang.octopus.data.CookbookDTO;
+import retrofit2.Call;
+import retrofit2.http.GET;
+
+public interface NetworkInterface {
+
+   // Get Cookbook Recipe
+   @GET("cookbook") Call<List<CookbookDTO>> getRecipes();
+
+   // TODO Post, Delete and edit
+   // Post New Recipe
+
+   // Edit Recipe
 }

@@ -36,6 +36,7 @@ import io.fabric.sdk.android.Fabric;
 import jhinyang.octopus.BaseActivity;
 import jhinyang.octopus.MainActivity;
 import jhinyang.octopus.R;
+import jhinyang.octopus.home.HomeActivity;
 
 public class LoginActivity extends BaseActivity {
 
@@ -161,7 +162,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void updateUI() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         this.finish();
     }
 }

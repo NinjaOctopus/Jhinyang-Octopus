@@ -1,6 +1,13 @@
-package jhinyang.octopus.network;
+/**
+ *
+ *  NetworkService.java
+ *
+ *  Created by Ashutosh Sharma on 08/15/18.
+ *  Copyright © 2018 Jhinyang Food Ltd.  All rights reserved.
+ *
+ */
 
-import android.provider.SyncStateContract;
+package jhinyang.octopus.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

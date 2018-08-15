@@ -1,17 +1,17 @@
+/**
+ *
+ *  HomeActivity.java
+ *
+ *  Created by Ashutosh Sharma on 08/15/18.
+ *  Copyright © 2018 Jhinyang Food Ltd.  All rights reserved.
+ *
+ */
+
 package jhinyang.octopus.home;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jhinyang.octopus.BaseActivity;
 import jhinyang.octopus.R;
-import jhinyang.octopus.utils.GifImageView;
 
 public class HomeActivity extends BaseActivity {
 

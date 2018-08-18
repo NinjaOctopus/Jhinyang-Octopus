@@ -15,4 +15,16 @@
     <string name="recipe_apt_for">This recipe is apt for : %s</string>
     <string name="recipe_category">Category: %s</string>
     <string name="recipe_price">Cost is : Rs %f</string>
+
+    <string name="submit_recipe">Submit</string>
+
+    <string name="add_recipe_title">Add recipe</string>
+    <string name="add_image">Recipe Image: </string>
+    <string name="add_recipe_name">Recipe Name: </string>
+    <string name="add_recipe_target">Recipe Target: </string>
+    <string name="add_recipe_apt_for">Apt For :</string>
+    <string name="add_recipe_contents">Recipe contents: </string>
+    <string name="add_recipe_category">Recipe Category: </string>
+    <string name="add_recipe_price">Recipe Cost: </string>
+
 </resources>

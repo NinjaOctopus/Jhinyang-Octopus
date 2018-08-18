@@ -10,5 +10,9 @@
     <string name="guest_login">Guest Peek</string>
     <string name="image_recipe">Image for the Recipe</string>
 
-    <string name="cost_recipe">Cost is : Rs %f</string>
+    <string name="recipe_contents">Contents of this recipe are :  %s</string>
+    <string name="recipe_target">This recipe is targeted for : %s</string>
+    <string name="recipe_apt_for">This recipe is apt for : %s</string>
+    <string name="recipe_category">Category: %s</string>
+    <string name="recipe_price">Cost is : Rs %f</string>
 </resources>

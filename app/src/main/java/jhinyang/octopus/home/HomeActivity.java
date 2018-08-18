@@ -80,7 +80,6 @@ public class HomeActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("responsss", e.getMessage());
                     }
 
                     @Override

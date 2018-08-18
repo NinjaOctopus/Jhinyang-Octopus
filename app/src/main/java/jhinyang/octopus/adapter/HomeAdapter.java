@@ -59,12 +59,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 .into(holder.imgRecipe);
 
         holder.textRecipeName.setText(cookbookDTO.getName());
-        holder.textTarget.setText(cookbookDTO.getTarget());
-        holder.textContents.setText(cookbookDTO.getFoodContents() );
-        holder.textAptFor.setText(cookbookDTO.getAptFor());
-        holder.textCategory.setText(cookbookDTO.getCategory());
+        holder.textTarget.setText(holder.itemView.getContext().getResources().getString(R.string
+                .recipe_target, cookbookDTO.getTarget()));
+        holder.textContents.setText(holder.itemView.getContext().getResources().getString(R.string
+                .recipe_contents, cookbookDTO.getFoodContents()));
+        holder.textAptFor.setText(holder.itemView.getContext().getResources().getString(R.string
+                .recipe_apt_for, cookbookDTO.getAptFor()));
+        holder.textCategory.setText(holder.itemView.getContext().getResources().getString(R.string
+                .recipe_category, cookbookDTO.getCategory()));
         holder.textPrice.setText(holder.itemView.getContext().getResources().getString(R.string
-                        .cost_recipe, cookbookDTO.getPrice()));
+                        .recipe_price, cookbookDTO.getPrice()));
     }
 
     @Override

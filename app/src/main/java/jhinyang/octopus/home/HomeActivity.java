@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,8 +52,6 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.rv_recipe) RecyclerView recyclerRecipe;
     @BindView(R.id.fb_add_recipe) FloatingActionButton fbAddRecipe;
 
-    private List<CookbookDTO> tmpCookbook;
-
     private HomeAdapter adapter;
 
     @SuppressLint("CheckResult")
@@ -63,6 +62,10 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(HomeActivity.this);
         intializeSetup();
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.app_display));
+        }
 
         Retrofit retrofit = NetworkService.getClient(HomeActivity.this);
 
@@ -79,13 +82,7 @@ public class HomeActivity extends BaseActivity {
 
                     @Override
                     public void onNext(List<CookbookDTO> cookbookDTOS) {
-                       for(int i = 2; i < cookbookDTOS.size(); i++) {
-                           if(cookbookDTOS.get(i).getName() != null) {
-                               tmpCookbook.add(cookbookDTOS.get(i));
-                           }
-                       }
-
-                       populateView(tmpCookbook);
+                       populateView(cookbookDTOS);
                     }
 
                     @Override
@@ -100,7 +97,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void intializeSetup() {
-        tmpCookbook = new ArrayList<>();
         recyclerRecipe.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
         // TODO load gif image in background
     }

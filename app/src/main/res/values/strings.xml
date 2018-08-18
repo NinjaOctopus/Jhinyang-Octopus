@@ -8,4 +8,7 @@
     <string name="fb_login_protocol_scheme">fb1870268266350152</string>
 
     <string name="guest_login">Guest Peek</string>
+    <string name="image_recipe">Image for the Recipe</string>
+
+    <string name="cost_recipe">Cost is : Rs %f</string>
 </resources>

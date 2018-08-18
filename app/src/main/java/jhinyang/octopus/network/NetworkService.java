@@ -60,19 +60,6 @@ public class NetworkService {
 
         httpClient.addInterceptor(interceptor);
 
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                Request.Builder requestBuilder = original.newBuilder()
-                        .addHeader("Accept", "application/json")
-                        .addHeader("Content-Type", "application/json");
-
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
-        });
-
         okHttpClient = httpClient.build();
     }
 }

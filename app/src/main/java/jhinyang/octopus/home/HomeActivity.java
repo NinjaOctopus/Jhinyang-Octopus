@@ -12,22 +12,38 @@ package jhinyang.octopus.home;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import jhinyang.octopus.BaseActivity;
 import jhinyang.octopus.R;
+import jhinyang.octopus.adapter.HomeAdapter;
 import jhinyang.octopus.data.CookbookDTO;
 import jhinyang.octopus.network.NetworkInterface;
 import jhinyang.octopus.network.NetworkService;
 import retrofit2.Retrofit;
 
 public class HomeActivity extends BaseActivity {
+
+    @BindView(R.id.rv_recipe) RecyclerView recyclerRecipe;
+
+    private List<CookbookDTO> tmpCookbook;
+
+    private HomeAdapter adapter;
 
     @SuppressLint("CheckResult")
     @Override
@@ -45,16 +61,26 @@ public class HomeActivity extends BaseActivity {
         networkInterface.getRecipes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<CookbookDTO>>() {
+                .subscribe(new Observer<List<CookbookDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
                     @Override
                     public void onNext(List<CookbookDTO> cookbookDTOS) {
-                        Log.d("responsss", cookbookDTOS.size() + "");
-                        populateView(cookbookDTOS);
+                       for(int i = 2; i < cookbookDTOS.size(); i++) {
+                           if(cookbookDTOS.get(i).getName() != null) {
+                               tmpCookbook.add(cookbookDTOS.get(i));
+                           }
+                       }
+
+                       populateView(tmpCookbook);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.d("responsss", e.getMessage());
                     }
 
                     @Override
@@ -65,12 +91,14 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void intializeSetup() {
-
+        tmpCookbook = new ArrayList<>();
+        recyclerRecipe.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
         // TODO load gif image in background
 
     }
 
     private void populateView(List<CookbookDTO> cookbookDTOS) {
-
+        adapter = new HomeAdapter(cookbookDTOS);
+        recyclerRecipe.setAdapter(adapter);
     }
 }

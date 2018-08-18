@@ -11,6 +11,7 @@ package jhinyang.octopus.network;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import jhinyang.octopus.data.CookbookDTO;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,7 +19,7 @@ import retrofit2.http.GET;
 public interface NetworkInterface {
 
    // Get Cookbook Recipe
-   @GET("cookbook") Call<List<CookbookDTO>> getRecipes();
+   @GET("cookbook") Observable<List<CookbookDTO>> getRecipes();
 
    // TODO Post, Delete and edit
    // Post New Recipe

@@ -9,32 +9,27 @@
 
 package jhinyang.octopus.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
-
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import jhinyang.octopus.BaseActivity;
 import jhinyang.octopus.R;
 import jhinyang.octopus.data.CookbookDTO;
 import jhinyang.octopus.network.NetworkInterface;
 import jhinyang.octopus.network.NetworkService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HomeActivity extends BaseActivity implements Callback<List<CookbookDTO>> {
+public class HomeActivity extends BaseActivity {
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +38,30 @@ public class HomeActivity extends BaseActivity implements Callback<List<Cookbook
         ButterKnife.bind(HomeActivity.this);
         intializeSetup();
 
-        NetworkService networkClass = new NetworkService();
-        Retrofit retrofit = networkClass.start();
+        Retrofit retrofit = NetworkService.getClient(HomeActivity.this);
 
         NetworkInterface networkInterface = retrofit.create(NetworkInterface.class);
 
-        Call<List<CookbookDTO>> resultDTOCall = networkInterface.getRecipes();
-        resultDTOCall.enqueue(this);
+        networkInterface.getRecipes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<List<CookbookDTO>>() {
+                    @Override
+                    public void onNext(List<CookbookDTO> cookbookDTOS) {
+                        Log.d("responsss", cookbookDTOS.size() + "");
+                        populateView(cookbookDTOS);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void intializeSetup() {
@@ -58,13 +70,7 @@ public class HomeActivity extends BaseActivity implements Callback<List<Cookbook
 
     }
 
-    @Override
-    public void onResponse(Call<List<CookbookDTO>> call, Response<List<CookbookDTO>> response) {
-        Log.d("responsss", response.body().toString());
-    }
+    private void populateView(List<CookbookDTO> cookbookDTOS) {
 
-    @Override
-    public void onFailure(Call<List<CookbookDTO>> call, Throwable t) {
-        Log.d("responsss", t.getMessage());
     }
 }

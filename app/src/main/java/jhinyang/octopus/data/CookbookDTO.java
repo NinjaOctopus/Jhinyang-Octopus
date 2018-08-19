@@ -18,6 +18,10 @@ import com.google.gson.annotations.SerializedName;
 @JsonIgnoreProperties
 public class CookbookDTO {
 
+    @SerializedName("_id")
+    @Expose
+    private String id;
+
     @SerializedName("aptFor")
     @Expose
     private String aptFor;
@@ -39,6 +43,14 @@ public class CookbookDTO {
     @SerializedName("category")
     @Expose
     private String category;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getAptFor() {
         return aptFor;

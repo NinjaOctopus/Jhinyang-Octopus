@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DefaultObserver;
@@ -58,6 +59,10 @@ public class HomeActivity extends BaseActivity {
 
     private HomeAdapter adapter;
 
+    private Retrofit retrofit;
+    private NetworkInterface networkInterface;
+
+
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,10 +75,6 @@ public class HomeActivity extends BaseActivity {
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getResources().getString(R.string.app_display));
         }
-
-        Retrofit retrofit = NetworkService.getClient(HomeActivity.this);
-
-        NetworkInterface networkInterface = retrofit.create(NetworkInterface.class);
 
         networkInterface.getRecipes()
                 .subscribeOn(Schedulers.io())
@@ -103,6 +104,8 @@ public class HomeActivity extends BaseActivity {
     private void intializeSetup() {
         recyclerRecipe.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
         // TODO load gif image in background
+        retrofit = NetworkService.getClient(HomeActivity.this);
+        networkInterface = retrofit.create(NetworkInterface.class);
     }
 
     @OnClick(R.id.fb_add_recipe)
@@ -118,13 +121,38 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onRightClicked(int position) {
 
+                CookbookDTO cookbookDTO = cookbookDTOS.get(position);
                 // Update Recyclerview UI
-                cookbookDTOS.remove(cookbookDTOS.get(position));
+                cookbookDTOS.remove(cookbookDTO);
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemChanged(position, adapter.getItemCount());
 
                 // Send Delete request parallely
                 // TODO Send Delete Request
+                networkInterface.deleteRecipe(cookbookDTO.getId())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Single>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Single single) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
             }
 
             @Override
@@ -164,11 +192,6 @@ public class HomeActivity extends BaseActivity {
         btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Send post request here
-                Retrofit retrofit = NetworkService.getClient(HomeActivity.this);
-
-                NetworkInterface networkInterface = retrofit.create(NetworkInterface.class);
-
                 CookbookDTO cookbookDTO = new CookbookDTO();
                 cookbookDTO.setImage(editRecipeImage.getText().toString());
                 cookbookDTO.setName(editRecipeName.getText().toString());

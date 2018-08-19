@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/guest_login"
+        android:backgroundTint="@color/green"
         android:tint="@color/white"
         android:src="@drawable/add"
         app:layout_constraintRight_toRightOf="parent"

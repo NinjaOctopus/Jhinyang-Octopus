@@ -47,9 +47,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CookbookDTO cookbookDTO = cookbookDTOS.get(position);
-        if(TextUtils.isEmpty(cookbookDTO.getName()) || TextUtils.isEmpty(cookbookDTO.getImage())) {
-            return;
-        }
         // Load image into imageview
         GlideApp.with(holder.itemView.getContext())
                 .load(cookbookDTO.getImage())
@@ -58,7 +55,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         .placeholder(R.drawable.kissping))
                 .into(holder.imgRecipe);
 
-        holder.textRecipeName.setText(cookbookDTO.getName());
+        if(TextUtils.isEmpty(cookbookDTO.getName())) {
+            holder.textRecipeName.setText("FOODIE");
+        } else {
+            holder.textRecipeName.setText(cookbookDTO.getName());
+        }
         holder.textTarget.setText(holder.itemView.getContext().getResources().getString(R.string
                 .recipe_target, cookbookDTO.getTarget()));
         holder.textContents.setText(holder.itemView.getContext().getResources().getString(R.string

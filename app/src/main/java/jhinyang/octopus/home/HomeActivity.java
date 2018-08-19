@@ -76,29 +76,7 @@ public class HomeActivity extends BaseActivity {
             getSupportActionBar().setTitle(getResources().getString(R.string.app_display));
         }
 
-        networkInterface.getRecipes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<CookbookDTO>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<CookbookDTO> cookbookDTOS) {
-                       populateView(cookbookDTOS);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        showRecipe();
     }
 
     private void intializeSetup() {
@@ -114,6 +92,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void populateView(final List<CookbookDTO> cookbookDTOS) {
+        adapter = null;
         adapter = new HomeAdapter(cookbookDTOS);
         recyclerRecipe.setAdapter(adapter);
 
@@ -226,7 +205,35 @@ public class HomeActivity extends BaseActivity {
                             }
                         });
                 mBottomSheetDialog.dismiss();
+                adapter.notifyDataSetChanged();
+                showRecipe();
             }
         });
+    }
+
+    private void showRecipe(){
+        networkInterface.getRecipes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<CookbookDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<CookbookDTO> cookbookDTOS) {
+                        populateView(cookbookDTOS);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

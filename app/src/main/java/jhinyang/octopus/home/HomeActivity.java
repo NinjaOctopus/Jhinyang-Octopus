@@ -17,6 +17,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ import jhinyang.octopus.adapter.HomeAdapter;
 import jhinyang.octopus.data.CookbookDTO;
 import jhinyang.octopus.network.NetworkInterface;
 import jhinyang.octopus.network.NetworkService;
+import jhinyang.octopus.utils.SwipeController;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
@@ -109,6 +111,10 @@ public class HomeActivity extends BaseActivity {
     private void populateView(List<CookbookDTO> cookbookDTOS) {
         adapter = new HomeAdapter(cookbookDTOS);
         recyclerRecipe.setAdapter(adapter);
+
+        SwipeController swipeController = new SwipeController();
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(recyclerRecipe);
     }
 
     private void showBottomSheetAddRecipe() {

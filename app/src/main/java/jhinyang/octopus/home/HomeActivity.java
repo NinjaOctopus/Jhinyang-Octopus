@@ -10,6 +10,7 @@
 package jhinyang.octopus.home;
 
 import android.annotation.SuppressLint;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
@@ -46,6 +47,7 @@ import jhinyang.octopus.data.CookbookDTO;
 import jhinyang.octopus.network.NetworkInterface;
 import jhinyang.octopus.network.NetworkService;
 import jhinyang.octopus.utils.SwipeController;
+import jhinyang.octopus.utils.SwipeControllerActions;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
@@ -108,13 +110,38 @@ public class HomeActivity extends BaseActivity {
         showBottomSheetAddRecipe();
     }
 
-    private void populateView(List<CookbookDTO> cookbookDTOS) {
+    private void populateView(final List<CookbookDTO> cookbookDTOS) {
         adapter = new HomeAdapter(cookbookDTOS);
         recyclerRecipe.setAdapter(adapter);
 
-        SwipeController swipeController = new SwipeController();
+        final SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position) {
+
+                // Update Recyclerview UI
+                cookbookDTOS.remove(cookbookDTOS.get(position));
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemChanged(position, adapter.getItemCount());
+
+                // Send Delete request parallely
+                // TODO Send Delete Request
+            }
+
+            @Override
+            public void onLeftClicked(int position) {
+                // Send update request here
+                // TODO Put Call
+            }
+        });
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(recyclerRecipe);
+
+        recyclerRecipe.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 
     private void showBottomSheetAddRecipe() {

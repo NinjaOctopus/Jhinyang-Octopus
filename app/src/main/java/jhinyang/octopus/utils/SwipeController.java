@@ -17,8 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 
-import jhinyang.octopus.R;
-
 import static android.support.v7.widget.helper.ItemTouchHelper.*;
 
 enum ButtonsState {

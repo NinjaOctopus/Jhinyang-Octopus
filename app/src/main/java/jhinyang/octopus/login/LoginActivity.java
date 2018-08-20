@@ -74,7 +74,6 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-
                         updateUI();
                     }
 

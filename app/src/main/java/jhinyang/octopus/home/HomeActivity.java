@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class HomeActivity extends BaseActivity {
 
     @BindView(R.id.rv_recipe) RecyclerView recyclerRecipe;
     @BindView(R.id.fb_add_recipe) FloatingActionButton fbAddRecipe;
+    @BindView(R.id.pb_home) ProgressBar progressBarHome;
 
     private HomeAdapter adapter;
 
@@ -76,6 +78,9 @@ public class HomeActivity extends BaseActivity {
             getSupportActionBar().setTitle(getResources().getString(R.string.app_display));
         }
 
+        progressBarHome = new ProgressBar(HomeActivity.this);
+        progressBarHome.setIndeterminate(true);
+        progressBarHome.setVisibility(View.VISIBLE);
         showRecipe();
     }
 
@@ -149,6 +154,10 @@ public class HomeActivity extends BaseActivity {
                 swipeController.onDraw(c);
             }
         });
+
+        if (progressBarHome.isShown()) {
+            progressBarHome.setVisibility(View.GONE);
+        }
     }
 
     private void showBottomSheetAddRecipe() {
@@ -218,7 +227,9 @@ public class HomeActivity extends BaseActivity {
                 .subscribe(new Observer<List<CookbookDTO>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        if (!progressBarHome.isShown()) {
+                            progressBarHome.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override
@@ -232,7 +243,7 @@ public class HomeActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-
+                        progressBarHome.setVisibility(View.GONE);
                     }
                 });
     }

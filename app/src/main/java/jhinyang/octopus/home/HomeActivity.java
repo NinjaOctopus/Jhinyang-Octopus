@@ -12,35 +12,23 @@ package jhinyang.octopus.home;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DefaultObserver;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import jhinyang.octopus.BaseActivity;
 import jhinyang.octopus.R;
@@ -50,8 +38,9 @@ import jhinyang.octopus.network.NetworkInterface;
 import jhinyang.octopus.network.NetworkService;
 import jhinyang.octopus.utils.SwipeController;
 import jhinyang.octopus.utils.SwipeControllerActions;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
+
+import java.util.List;
 
 public class HomeActivity extends BaseActivity {
 
